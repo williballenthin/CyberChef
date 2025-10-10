@@ -4,14 +4,16 @@ module.exports = function(api) {
     return {
         "presets": [
             ["@babel/preset-env", {
-                "modules": false,
+                "modules": "commonjs",
                 "useBuiltIns": "entry",
                 "corejs": 3
             }]
         ],
         "plugins": [
             "dynamic-import-node",
-            "@babel/plugin-syntax-import-assertions",
+            ["@babel/plugin-syntax-import-assertions", {
+                "importAttributesKeyword": "with"
+            }],
             [
                 "babel-plugin-transform-builtin-extend", {
                     "globals": ["Error"]
@@ -22,6 +24,9 @@ module.exports = function(api) {
                     "regenerator": true
                 }
             ]
-        ]
+        ],
+        "generatorOpts": {
+            "importAttributesKeyword": "with"
+        }
     };
 };
