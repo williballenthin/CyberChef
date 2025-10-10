@@ -41,7 +41,10 @@ module.exports = {
     output: {
         publicPath: "",
         globalObject: "this",
-        assetModuleFilename: "assets/[hash][ext][query]"
+        assetModuleFilename: "assets/[hash][ext][query]",
+        library: {
+            type: "commonjs2"
+        }
     },
     plugins: [
         new webpack.ProvidePlugin({

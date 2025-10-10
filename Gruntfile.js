@@ -7,6 +7,7 @@ const glob = require("glob");
 const path = require("path");
 
 const nodeFlags = "--experimental-modules --experimental-json-modules --experimental-specifier-resolution=node --no-warnings --no-deprecation";
+const webpackNodeConfig = require("./webpack.node.config.js");
 
 /**
  * Grunt configuration for building the app in various formats.
@@ -28,14 +29,14 @@ module.exports = function (grunt) {
     grunt.registerTask("prod",
         "Creates a production-ready build. Use the --msg flag to add a compile message.",
         [
-            "eslint", "clean:prod", "clean:config", "exec:generateConfig", "findModules", "webpack:web",
+            "eslint", "clean:prod", "clean:config", "exec:generateConfig", "webpack:web",
             "copy:standalone", "zip:standalone", "clean:standalone", "exec:calcDownloadHash", "chmod"
         ]);
 
     grunt.registerTask("node",
-        "Compiles CyberChef into a single NodeJS module.",
+        "Compiles CyberChef into a single NodeJS CommonJS module.",
         [
-            "clean:node", "clean:config", "clean:nodeConfig", "exec:generateConfig", "exec:generateNodeIndex"
+            "clean:node", "clean:config", "clean:nodeConfig", "exec:generateConfig", "exec:generateNodeIndex", "webpack:node"
         ]);
 
     grunt.registerTask("configTests",
@@ -106,15 +107,22 @@ module.exports = function (grunt) {
             return {
                 mode: "production",
                 target: "web",
-                entry: Object.assign({
+                entry: {
                     main: "./src/web/index.js"
-                }, moduleEntryPoints),
+                },
                 output: {
                     path: __dirname + "/build/prod",
                     filename: chunkData => {
-                        return chunkData.chunk.name === "main" ? "assets/[name].js": "[name].js";
+                        return chunkData.chunk.name === "main" ? "cyberchef.js" : "[name].js";
                     },
-                    globalObject: "this"
+                    globalObject: "this",
+                    library: {
+                        type: "commonjs2"
+                    }
+                },
+                optimization: {
+                    splitChunks: false,
+                    runtimeChunk: false
                 },
                 resolve: {
                     alias: {
@@ -202,6 +210,7 @@ module.exports = function (grunt) {
             options: webpackConfig,
             myConfig: webpackConfig,
             web: webpackProdConf(),
+            node: webpackNodeConfig,
         },
         "webpack-dev-server": {
             options: webpackConfig,
