@@ -104,7 +104,11 @@ module.exports = {
             entryOnly: true
         }),
         new webpack.DefinePlugin({
-            "process.browser": "true"
+            "process.browser": "true",
+            // Provide process.versions.node so isNodeEnvironment() works
+            // This allows the bundle to work in both real Node.js and
+            // environments with Node.js polyfills (like STPyV8/PythonMonkey)
+            "process.versions.node": JSON.stringify("18.0.0")
         })
     ],
     optimization: {
