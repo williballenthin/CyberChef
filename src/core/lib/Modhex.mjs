@@ -48,7 +48,7 @@ const HEX_ALPHABET_MAP = HEX_ALPHABET.split("");
  * toModhex([10,20,30], ":");
  */
 export function toModhex(data, delim=" ", padding=2, extraDelim="", lineSize=0) {
-    if (!data) return "";
+    if (!data || data.length === 0 || data.byteLength === 0) return "";
     if (data instanceof ArrayBuffer) data = new Uint8Array(data);
     if (data.length === 0) return "";
 
