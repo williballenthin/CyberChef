@@ -56,22 +56,19 @@ class UnescapeUnicodeCharacters extends Operation {
      */
     run(input, args) {
         const prefix = prefixToRegex[args[0]],
-            regex = new RegExp(prefix+"([a-f\\d]{4})", "ig");
+            regex = args[0] === "U+"
+                ? new RegExp(prefix+"([a-f\\d]{4,6})", "ig")
+                : new RegExp(prefix+"([a-f\\d]{4})", "ig");
         let output = "",
             m,
             i = 0;
 
         while ((m = regex.exec(input))) {
-            // Add up to match
             output += input.slice(i, m.index);
-
-            // Add match
             output += Utils.chr(parseInt(m[1], 16));
-
             i = regex.lastIndex;
         }
 
-        // Add all after final match
         output += input.slice(i, input.length);
 
         return output;
