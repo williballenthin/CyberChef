@@ -56,7 +56,10 @@ class UnescapeUnicodeCharacters extends Operation {
      */
     run(input, args) {
         const prefix = prefixToRegex[args[0]],
-            regex = new RegExp(prefix+"([a-f\\d]{4})", "ig");
+            regex = new RegExp(
+                prefix + (args[0] === "U+" ? "([a-f\\d]{4,6})" : "([a-f\\d]{4})"),
+                "ig"
+            );
         let output = "",
             m,
             i = 0;
