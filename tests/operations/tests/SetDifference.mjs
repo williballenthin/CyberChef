@@ -53,4 +53,26 @@ TestRegister.addTests([
             },
         ],
     },
+    {
+        name: "Set Difference: duplicate items in first sample",
+        input: "red,red,blue\n\nblue",
+        expectedOutput: "red",
+        recipeConfig: [
+            {
+                op: "Set Difference",
+                args: ["\n\n", ","],
+            },
+        ],
+    },
+    {
+        name: "Set Difference: duplicate results are deduplicated",
+        input: "1,1,2,2,3\n\n3",
+        expectedOutput: "1,2",
+        recipeConfig: [
+            {
+                op: "Set Difference",
+                args: ["\n\n", ","],
+            },
+        ],
+    },
 ]);

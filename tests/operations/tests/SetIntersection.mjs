@@ -52,5 +52,27 @@ TestRegister.addTests([
                 args: ["z", "-"],
             },
         ],
-    }
+    },
+    {
+        name: "Set Intersection: duplicate items in first sample",
+        input: "red,red,blue\n\nred,blue",
+        expectedOutput: "red,blue",
+        recipeConfig: [
+            {
+                op: "Set Intersection",
+                args: ["\n\n", ","],
+            },
+        ],
+    },
+    {
+        name: "Set Intersection: duplicate results are deduplicated",
+        input: "y,y,z\n\ny",
+        expectedOutput: "y",
+        recipeConfig: [
+            {
+                op: "Set Intersection",
+                args: ["\n\n", ","],
+            },
+        ],
+    },
 ]);
