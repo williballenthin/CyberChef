@@ -80,4 +80,30 @@ TestRegister.addTests([
             },
         ],
     },
+    {
+        name: "Unescape Unicode Characters: U+ astral plane code point",
+        input: "U+1F600",
+        expectedOutput: "😀",
+        recipeConfig: [
+            {
+                "op": "Unescape Unicode Characters",
+                "args": ["U+"]
+            }
+        ],
+    },
+    {
+        name: "Unescape Unicode Characters: U+ zero-padded round trip",
+        input: "U+000041",
+        expectedOutput: "U+000041",
+        recipeConfig: [
+            {
+                "op": "Unescape Unicode Characters",
+                "args": ["U+"]
+            },
+            {
+                "op": "Escape Unicode Characters",
+                "args": ["U+", true, 6, true]
+            }
+        ],
+    },
 ]);
