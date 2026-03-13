@@ -86,4 +86,19 @@ TestRegister.addTests([
             }
         ]
     },
+    {
+        name: "Gzip: Has a comment and checksum",
+        input: "hello hello hello",
+        expectedOutput: "hello hello hello",
+        recipeConfig: [
+            {
+                op: "Gzip",
+                args: ["Dynamic Huffman Coding", "", "test", true]
+            },
+            {
+                op: "Gunzip",
+                args: []
+            }
+        ]
+    },
 ]);
