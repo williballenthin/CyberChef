@@ -512,7 +512,7 @@ class Utils {
             if (isWorkerEnvironment() && self && typeof self.setOption === "function") {
                 self.setOption("attemptHighlight", false);
             } else if (isWebEnvironment()) {
-                window.app.options.attemptHighlight = false;
+                if (window.app && window.app.options) window.app.options.attemptHighlight = false;
             }
         }
 
@@ -571,7 +571,7 @@ class Utils {
             if (isWorkerEnvironment()) {
                 self.setOption("attemptHighlight", false);
             } else if (isWebEnvironment()) {
-                window.app.options.attemptHighlight = false;
+                if (window.app && window.app.options) window.app.options.attemptHighlight = false;
             }
         }
 
@@ -641,7 +641,7 @@ class Utils {
                 if (isWorkerEnvironment()) {
                     self.setOption("attemptHighlight", false);
                 } else if (isWebEnvironment()) {
-                    window.app.options.attemptHighlight = false;
+                    if (window.app && window.app.options) window.app.options.attemptHighlight = false;
                 }
             }
 
