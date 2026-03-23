@@ -30,6 +30,18 @@ TestRegister.addTests([
                 args: ["Decode"],
             },
         ],
+    },
+    {
+        name: "Text Encoding Brute Force - Decode UTF-8 bytes",
+        // The bytes 63 61 66 c3 a9 ("café" in UTF-8), as a byte string.
+        input: "caf\u00c3\u00a9",
+        expectedMatch: /IBM EBCDIC International \(500\).{1,10}Ä\/ÃCz/,
+        recipeConfig: [
+            {
+                op: "Text Encoding Brute Force",
+                args: ["Decode"],
+            },
+        ],
     }
 ]);
 
