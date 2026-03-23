@@ -30,6 +30,17 @@ TestRegister.addTests([
                 args: ["Decode"],
             },
         ],
+    },
+    {
+        name: "Text Encoding Brute Force - Decode UTF-8 bytes",
+        input: "café",
+        expectedMatch: /IBM EBCDIC International \(500\).{1,10}Ä\/ÃCz/,
+        recipeConfig: [
+            {
+                op: "Text Encoding Brute Force",
+                args: ["Decode"],
+            },
+        ],
     }
 ]);
 
