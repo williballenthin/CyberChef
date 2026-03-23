@@ -230,6 +230,14 @@ export function _wrap(OpClass) {
         wrapped = (input, args=null) => {
             const {transformedInput, transformedArgs} = prepareOp(opInstance, input, args);
             const result = opInstance.run(transformedInput, transformedArgs);
+            if (result && typeof result.then === "function") {
+                return result.then((resolvedResult) => {
+                    return new NodeDish({
+                        value: resolvedResult,
+                        type: opInstance.outputType,
+                    });
+                });
+            }
             return new NodeDish({
                 value: result,
                 type: opInstance.outputType,
