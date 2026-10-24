@@ -116,6 +116,10 @@ function fuzzyMatchRecursive(
     let recursiveMatch = false;
     let bestRecursiveMatches = [];
     let bestRecursiveScore = 0;
+    // Passed into, and filled by, each recursive call. Declared here rather
+    // than with the call's results: reading a const in its own initialiser
+    // throws "Cannot access 'recursiveMatches' before initialization".
+    let recursiveMatches;
 
     // Loop through pattern and str looking for a match.
     let firstMatch = true;
@@ -133,7 +137,8 @@ function fuzzyMatchRecursive(
                 firstMatch = false;
             }
 
-            const [matched, recursiveScore, recursiveMatches] = fuzzyMatchRecursive(
+            let matched, recursiveScore;
+            [matched, recursiveScore, recursiveMatches] = fuzzyMatchRecursive(
                 pattern,
                 str,
                 patternCurIndex,
